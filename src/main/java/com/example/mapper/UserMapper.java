@@ -26,7 +26,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    @Insert("insert into user values(#{userId},#{userAccount},#{password})")
+    @Insert("insert into user values(#{userId},#{userAccount},#{password},#{numberId})")
     //加入该注解可以保存对象后，查看对象插入id
     @Options(useGeneratedKeys = true,keyProperty = "userId",keyColumn = "userId")
     void regist(User user);
@@ -38,4 +38,14 @@ public interface UserMapper {
      */
     @Select("select u.userId from user u where u.userAccount = #{userAccount} and password = #{password}")
     Long login(User user);
+
+    //更新
+    @Update("update user set password=#{password} where numberId = #{numberId}")
+    void updateUserByNumberId( @Param("password") String password,@Param("numberId") String numberId);
+
+    //删除
+    //删除信息record
+    @Delete("delete from user where numberId=#{numberId}")
+    void delUserByNumberId(@Param("numberId") long numberId);
+
 }
