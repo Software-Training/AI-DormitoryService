@@ -4,11 +4,12 @@ import com.baidu.aip.face.AipFace;
 import org.springframework.stereotype.Component;
 
 @Component
+//百度人脸库相关数据
 public class AiFaceObject {
 	public String APP_ID = "19242504";
 	public String API_KEY = "iaHUv3P2AmAeqXv858XWYtB7";
 	public String SECRET_KEY = "eGladR5RL7FEhOOWGiwyXmkVzucGzlL3";
-	public String GROUD_LIST = "User";
+	public String GROUD_LIST = "2";
 	    
 	private AipFace client = new AipFace(APP_ID, API_KEY, SECRET_KEY);
 

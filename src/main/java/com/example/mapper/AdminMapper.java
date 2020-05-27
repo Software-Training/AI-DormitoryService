@@ -6,14 +6,18 @@ import com.example.bean.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface AdminMapper {
     /**
      * 登录
-     * @param admin
+     * @param
      * @return
      */
     @Select("select a.adminId from admin a where a.adminAccount = #{adminAccount} and a.password = #{password}")
-    Long login(Admin admin);
+    Long login(@Param("adminAccount") String adminAccount,  @Param("password") String password);
+    @Select("select * from admin a where a.adminAccount = #{adminAccount} and a.password = #{password}")
+    Admin getAdminByAdminAccountAndPassword(@Param("adminAccount") String adminAccount, @Param("password") String password);
 }

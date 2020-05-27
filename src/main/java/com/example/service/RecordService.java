@@ -35,7 +35,10 @@ public class RecordService {
         return recordMapper.getRecordViewByNumberId(numberId);
     }
 
-    public List<RecordView> searchByNumberIdAndDate(String numberId, Date date) {
+    public List<RecordView> searchByNumberIdAndDate(String numberId, String date) {
         return recordMapper.getRecordViewByNumberIdAndDate(numberId,date);
+    }
+    public List<RecordView> searchByDate(String date) {
+        return recordMapper.getRecordViewByDate(date);
     }
 }

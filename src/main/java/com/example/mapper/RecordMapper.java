@@ -32,6 +32,10 @@ public interface RecordMapper {
 
     //查询某一天的该学生进出记录信息
     @Select("select * from recordview where numberId=#{numberId} and date=#{date}")
-    List<RecordView> getRecordViewByNumberIdAndDate(@Param("numberId") String numberId,@Param("date") Date date);
+    List<RecordView> getRecordViewByNumberIdAndDate(@Param("numberId") String numberId,@Param("date") String date);
+
+    //查询某一天的学生进出记录信息
+    @Select("select * from recordview where  date=#{date}")
+    List<RecordView> getRecordViewByDate(@Param("date") String date);
 }
 

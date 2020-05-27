@@ -5,6 +5,8 @@ import com.example.bean.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface UserMapper {
@@ -15,11 +17,8 @@ public interface UserMapper {
      * @param userAccount
      * @return
      */
-    @Select(value = "select u.userAccount,u.password from user u where u.userAccount=#{userAccount}")
-    @Results
-            ({@Result(property = "userAccount",column = "userAccount"),
-                    @Result(property = "password",column = "password")})
-    User findUserByAccount(@Param("userAccount") String userAccount);
+    @Select(value = "select * from user u where u.userAccount=#{userAccount}")
+    List<User> findUserByAccount(@Param("userAccount") String userAccount);
 
     /**
      * 注册  插入一条user记录
@@ -45,7 +44,10 @@ public interface UserMapper {
 
     //删除
     //删除信息record
-    @Delete("delete from user where numberId=#{numberId}")
-    void delUserByNumberId(@Param("numberId") long numberId);
+    @Delete("delete from user where userId=#{userId}")
+    void delUserByUserId(@Param("userId") long userId);
 
+    //查询所有
+    @Select("select * from user ")
+     List<User> getUser();
 }

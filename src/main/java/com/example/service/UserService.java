@@ -3,9 +3,7 @@ package com.example.service;
 
 
 
-import com.example.bean.Record;
-import com.example.bean.Result;
-import com.example.bean.User;
+import com.example.bean.*;
 import com.example.mapper.RecordMapper;
 import com.example.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 @Transactional(rollbackFor = RuntimeException.class)
@@ -23,13 +22,30 @@ public class UserService {
     @Autowired
     private RecordMapper recordMapper;
 
+//新增
+    public void add(User user) {
+        userMapper.regist(user);
+    }
+//删除
+    public void delete(long userId) {
+        userMapper.delUserByUserId(userId);
+    }
+//按账号查询
+    public List<User> getUserView(String account) {
+        return  userMapper.findUserByAccount(account);
+    }
+//查询所有
+    public List<User> getUser() {
+    return  userMapper.getUser();
+}
+
     public Result regist(User user) {
         Result result = new Result();
         result.setSuccess(false);
         result.setDetail(null);
         try {
-            User existUser = userMapper.findUserByAccount(user.getUserAccount());
-            if(existUser != null){
+            List<User> existUser = userMapper.findUserByAccount(user.getUserAccount());
+            if(!existUser.isEmpty() ){
                 //如果用户名已存在
                 result.setMsg("用户名已存在");
 
@@ -80,8 +96,10 @@ public class UserService {
         result.setSuccess(false);
         result.setDetail(null);
         try {
-            Long userId= user.getUserId();
-            if(userId == null){
+            String userAccount= user.getUserAccount();
+            List<User> list=userMapper.findUserByAccount(userAccount);
+            long userId =list.get(0).getUserId();
+            if(userAccount == null){
                 result.setMsg("暂未登陆");
             }else{
                 String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -98,4 +116,5 @@ public class UserService {
         }
         return result;
     }
+
 }
